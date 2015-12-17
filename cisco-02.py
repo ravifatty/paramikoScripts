@@ -8,6 +8,11 @@ import paramiko
 import time
 
 
+#Initialing the lists to store the interface name, input and output rates which we'll scrape from the output
+interface = []
+input_rate = []
+output_rate = []
+
 #Sets up the ssh session and logs in as user "dave" with password "password"
 #to host '192.168.1.22' . 
 #Also added "look_for_keys=False" and "allow_agent=False". 
@@ -50,12 +55,8 @@ resp = chan.recv(999999)
 
 resp = resp.split('\n')
 
-#Initialing the lists to store the interface name, input and output rates which we'll scrape from the output
-interface = []
-input_rate = []
-output_rate = []
 
-#Scraping the output of 
+#Scraping the output of our response for interesting data. 
 for line in resp:
     if "line protocol is" in line:
         fields = line.split()
