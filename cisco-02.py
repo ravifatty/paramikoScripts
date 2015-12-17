@@ -39,7 +39,8 @@ chan.send("terminal length 0\n")
 time.sleep(1)
 chan.recv(9999)
 
-#In this case we want to see the configured vlans, and store the response.
+#In this case we want the "show interfaces" output which contains the input and output  throughput in bps, 
+#and store the response.
 chan.send("show interfaces\n")
 time.sleep(5)
 resp = chan.recv(999999)
@@ -54,6 +55,7 @@ interface = []
 input_rate = []
 output_rate = []
 
+#Scraping the output of 
 for line in resp:
     if "line protocol is" in line:
         fields = line.split()
@@ -64,5 +66,7 @@ for line in resp:
     if "output rate" in line:
         raw = line.split()
         output_rate.append(raw[4])
+
+#Iterate through our lists and display the interface name, input and output rates.
 for i in range(0, len(interface)):
     print interface[i]," ", "input rate: ",input_rate[i],"bps ","output rate: ", output_rate[i], "bps"
