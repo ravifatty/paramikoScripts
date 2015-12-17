@@ -18,4 +18,6 @@ All of them will assume you have Python 2.7 and Paramiko installed.
 
 #Contents
 
-cisco-01.py :  Login via ssh, enter priviliged mode, and issue a command 
+cisco-01.py :  Login via ssh, enter priviliged mode, and issue a command , eg "Show vlan brief" 
+
+cisco-02.py :  Login to a switch via ssh, enter priviliged mode, and grab the current 5 min average throughput on all the interfaces
