@@ -9,9 +9,13 @@ import time
 
 
 #Sets up the ssh session and logs in as user "dave" with password "password"
+#to host '192.168.1.22' . 
+#Also added "look_for_keys=False" and "allow_agent=False". 
+#Paramiko will attempt to use any keys on the local host initially, but will crash and burn
+#if they aren't accepted. The switch I'm testing against isn't able to use key based auth.
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect('192.168.1.21', username='dave', password='password')
+ssh.connect('192.168.1.22', username='dave', password='password', look_for_keys=False, allow_agent=False)
 
 
 #Creates a channel object, to overcome weirdness with cisco devices
