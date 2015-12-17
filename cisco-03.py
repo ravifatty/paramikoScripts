@@ -8,7 +8,9 @@ import paramiko
 import time
 
 host = '192.168.1.22'
-
+user = 'dave'
+passw = 'password'
+enable_pass = 'password'
 
 #Ok, so, I'm creating a function to just take a command and send it to the device.
 #This reduces the amount of time I need to add in the "\n", sleep and clear the buffer.
@@ -30,7 +32,7 @@ def issue_command(channel, command, delay=1):
 try:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(host, username='dave', password='password', look_for_keys=False, allow_agent=False)
+    ssh.connect(host, username=user, password=passw, look_for_keys=False, allow_agent=False)
     chan = ssh.invoke_shell()
 except:
     print "Login to %s failed" % (host,)
@@ -39,7 +41,7 @@ except:
 
 if chan:
     issue_command(chan, "enable")
-    issue_command(chan, "password")
+    issue_command(chan, enable_pass)
     issue_command(chan, "terminal length 0")
     resp = issue_command(chan, "show vlan brief", 2)
     print resp
