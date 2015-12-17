@@ -49,22 +49,20 @@ resp = chan.recv(999999)
 
 resp = resp.split('\n')
 
+#Initialing the lists to store the interface name, input and output rates which we'll scrape from the output
 interface = []
 input_rate = []
 output_rate = []
-#Added as an example to print each line individually
+
 for line in resp:
     if "line protocol is" in line:
         fields = line.split()
         interface.append(fields[0])
-        #print interface
     if "input rate" in line:
         raw = line.split()
         input_rate.append(raw[4])
-        #print data[4]+" "+data[5]
     if "output rate" in line:
         raw = line.split()
         output_rate.append(raw[4])
-    #print interface+" "+"input: "+input_rate[4]+" "+"output: "+output_rate[4]
 for i in range(0, len(interface)):
     print interface[i]," ", "input rate: ",input_rate[i],"bps ","output rate: ", output_rate[i], "bps"
