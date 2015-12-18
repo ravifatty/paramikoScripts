@@ -44,6 +44,9 @@ chan.send("show vlan brief\n")
 time.sleep(1)
 resp = chan.recv(9999)
 
+#Great! We have all that we need, lets close the connection
+ssh.close()
+
 #We should have received a contiguous string of characters. 
 #Let's now split it apart into distinct lines
 

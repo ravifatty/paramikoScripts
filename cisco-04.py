@@ -49,6 +49,7 @@ if chan:
     issue_command(chan, enable_pass)
     issue_command(chan, "terminal length 0")
     resp = issue_command(chan, "show interfaces", 5)
+    ssh.close()
 else:
     print "Sorry, there is no connection to the host %s" % (host,)
 

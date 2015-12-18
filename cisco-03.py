@@ -44,6 +44,7 @@ if chan:
     issue_command(chan, enable_pass)
     issue_command(chan, "terminal length 0")
     resp = issue_command(chan, "show vlan brief", 2)
+    ssh.close()
     print resp
 else:
     print "Sorry, there is no connection to the host %s" % (host,)

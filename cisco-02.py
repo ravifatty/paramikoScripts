@@ -50,6 +50,10 @@ chan.send("show interfaces\n")
 time.sleep(5)
 resp = chan.recv(999999)
 
+#Great! We have what we need, now let's close the connection
+ssh.close()
+
+
 #We should have received a contiguous string of characters. 
 #Let's now split it apart into distinct lines
 
