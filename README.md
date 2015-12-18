@@ -25,3 +25,5 @@ cisco-02.py :  Login to a switch via ssh, enter priviliged mode, and grab the cu
 cisco-03.py :  Essentially cisco-01.py with some error handling, "try..except" wrapper for the ssh connection, and created the "issue_command" function to cut back on repeating the same lines when sending a command to the device.
 
 cisco-04.py :  Essentialy cisco-02.py with the error handlin and "issue_command" function from cisco-03.py
+
+junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
