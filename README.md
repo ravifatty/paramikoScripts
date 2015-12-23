@@ -27,3 +27,5 @@ cisco-03.py :  Essentially cisco-01.py with some error handling, "try..except" w
 cisco-04.py :  Essentialy cisco-02.py with the error handlin and "issue_command" function from cisco-03.py
 
 junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
+
+junos-02.py :  Sample Paramiko script using RSA key based authentication to log into the device and run "show version|no-more"
