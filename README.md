@@ -29,3 +29,5 @@ cisco-04.py :  Essentialy cisco-02.py with the error handlin and "issue_command"
 junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
 
 junos-02.py :  Sample Paramiko script using RSA key based authentication to log into the device and run "show version|no-more"
+
+junos-03.py :  Sample Paramiko script which connects to a remote device through a bastion server, aka, 'jump' box.
