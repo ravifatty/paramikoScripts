@@ -39,7 +39,7 @@ local_listen_ip, local_listen_port = sock.getsockname()
 
 
 #Read the contents of the private key file and store it.
-private_key_file = open('/Users/dave/.ssh/git_id_rsa', 'r')
+private_key_file = open('/Users/dave/.ssh/id_rsa', 'r')
 private_key = private_key_file.read()
 private_key_file.close()
 
@@ -72,11 +72,13 @@ try:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(bastion_host, username=user, pkey=decrypted_key)
-    #This is new, I'll need a transport object from the bastion/jump box to create the new session
-    #to the destination.
+    #This is new, I'll need a transport object from the bastion/jump box to create the a session
+    #to the far end destination.
     transport = ssh.get_transport()
     channel = transport.open_channel("direct-tcpip", (far_end_host,22),(local_listen_ip, local_listen_port))
     #Great, now letting Paramiko know to perform SSH Agent forwarding on this transport object.
+    #I do need to create an error handler to be sure connection to the bastion/jump box is established
+    #before proceeding....
     forward = paramiko.agent.AgentRequestHandler(transport.open_session())
     #Finally, we can then attempt to connect to the far end host.
     ssh2 = paramiko.SSHClient()
