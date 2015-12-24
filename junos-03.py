@@ -15,11 +15,12 @@ import socket
 
 
 
-bastion_host = '192.168.1.125'
-far_end_host = '192.168.13.2'
-user = 'dave'
-passw = 'super-secret-password'
-
+bastion_host = "192.168.1.125" # Our 'bastion' or 'jump' box
+far_end_host = "192.168.13.2" # The actual host we want to access
+user = "dave" # Username , must match on bastion and destination host
+passw = "super-secret-password" # Password for our encrypted RSA key
+rsa_key_file = "/Users/dave/.ssh/id_rsa" #Path to the specific private key we need to access the destination host
+command = "show version|no-more" #Command to issue at the far end host
 
 
 #We'll need to set up a local port to listen to.
@@ -39,7 +40,7 @@ local_listen_ip, local_listen_port = sock.getsockname()
 
 
 #Read the contents of the private key file and store it.
-private_key_file = open('/Users/dave/.ssh/id_rsa', 'r')
+private_key_file = open(rsa_key_file, 'r')
 private_key = private_key_file.read()
 private_key_file.close()
 
@@ -72,29 +73,35 @@ try:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(bastion_host, username=user, pkey=decrypted_key)
+
     #This is new, I'll need a transport object from the bastion/jump box to create the a session
     #to the far end destination.
     transport = ssh.get_transport()
     channel = transport.open_channel("direct-tcpip", (far_end_host,22),(local_listen_ip, local_listen_port))
+
     #Great, now letting Paramiko know to perform SSH Agent forwarding on this transport object.
     #I do need to create an error handler to be sure connection to the bastion/jump box is established
     #before proceeding....
     forward = paramiko.agent.AgentRequestHandler(transport.open_session())
+
     #Finally, we can then attempt to connect to the far end host.
     ssh2 = paramiko.SSHClient()
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
     #You'll notice that this is slightly different from the the initial conenction.
     #We simply supply the host, username, and add the channel that we'll be forwarding.
     ssh2.connect(far_end_host, username=user,sock=channel)
+
     #Our remote shell will now be to the far end device.
     chan = ssh2.invoke_shell()
+
 except:
     print "Login to %s failed" % (far_end_host,)
     chan = False
 
 
 if chan:
-    resp = issue_command(chan, "show version|no-more", 2)
+    resp = issue_command(chan, command, 2)
     ssh2.close()
     ssh.close()
     print resp
