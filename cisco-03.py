@@ -7,10 +7,10 @@ Requires Python 2.7 and Paramiko to be installed
 import paramiko
 import time
 
-host = '192.168.1.22'
-user = 'dave'
-passw = 'password'
-enable_pass = 'password'
+host = '192.168.1.22' #Remote device we want to interact with
+user = 'dave' #SSH user
+passw = 'password' #SSH password
+enable_pass = 'password' #Privileged-exec mode password
 
 #Ok, so, I'm creating a function to just take a command and send it to the device.
 #This reduces the amount of time I need to add in the "\n", sleep and clear the buffer.

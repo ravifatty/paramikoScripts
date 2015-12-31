@@ -14,6 +14,8 @@ import StringIO
 import socket
 
 
+#Todo, make all of these arguments that can be passed to the script . 
+#Also, the real value is to loop this through multiple far end devices and store the output somewhere.
 
 bastion_host = "192.168.1.125" # Our 'bastion' or 'jump' box
 far_end_host = "192.168.13.2" # The actual host we want to access
@@ -25,32 +27,31 @@ command = "show version|no-more" #Command to issue at the far end host
 
 #We'll need to set up a local port to listen to.
 #Otherwise we won't be able to capture in the incomming traffic.
-
 def make_socket(listen_ip):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((listen_ip, 0))
     return sock
 
-sock = make_socket('127.0.0.1')
-
-#And set them up in a the following vars:
-local_listen_ip, local_listen_port = sock.getsockname()
 
 
+#This function will take the local private key and decrypt it for use in our remote connections.
+def decrypt_rsa_key(keyfile, password):
+    #Read the contents of the private key file and store it.
+    private_key_file = open(rsa_key_file, 'r')
+    private_key = private_key_file.read()
+    private_key_file.close()
 
-#Read the contents of the private key file and store it.
-private_key_file = open(rsa_key_file, 'r')
-private_key = private_key_file.read()
-private_key_file.close()
+    #Convert the contents of the private key into a string
+    private_key_string = StringIO.StringIO(private_key)
 
-#Convert the contents of the private key into a string
-private_key_string = StringIO.StringIO(private_key)
+    #Now, we need it decrypted in order to use it in Paramiko.
+    #I've set a password on this private key so i'll need to supply the same password
+    #in order to decrypt it. 
+    decrypted_key = paramiko.RSAKey.from_private_key(private_key_string, password=passw)
 
-#Now, we need it decrypted in order to use it in Paramiko.
-#I've set a password on this private key so i'll need to supply the same password
-#in order to decrypt it. 
-decrypted_key = paramiko.RSAKey.from_private_key(private_key_string, password=passw)
+    #Return the decrypted key string
+    return decrypted_key
 
 
 #Ok, so, I'm creating a function to just take a command and send it to the device.
@@ -65,6 +66,15 @@ def issue_command(channel, command, delay=1):
     resp = chan.recv(99999)
     return resp
 
+#Ok, lets open a local socket to receive data from the remote device. 
+sock = make_socket('127.0.0.1')
+
+#And grab the local ip and port we've just created and set them up in following vars:
+local_listen_ip, local_listen_port = sock.getsockname()
+
+#And now get the rsa key:
+rsa_key = decrypt_rsa_key(rsa_key_file, passw)
+
 #Sets up the ssh session and logs in as user "dave" using RSA based key authentication
 #to host '192.168.1.125' , then continues on to log in using the same key to host '192.168.13.2'
 #Hopefully this is clear, if we can't establish a connection, we'll set "chan" to false.
@@ -72,7 +82,7 @@ def issue_command(channel, command, delay=1):
 try:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(bastion_host, username=user, pkey=decrypted_key)
+    ssh.connect(bastion_host, username=user, pkey=rsa_key)
 
     #This is new, I'll need a transport object from the bastion/jump box to create the a session
     #to the far end destination.
@@ -99,7 +109,8 @@ except:
     print "Login to %s failed" % (far_end_host,)
     chan = False
 
-
+#If we're able to establish an ssh session to the remote device, we'll issue a command and capture the response.
+#Otherwise, we'll just print some sort of error message.
 if chan:
     resp = issue_command(chan, command, 2)
     ssh2.close()

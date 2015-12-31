@@ -9,13 +9,13 @@ on the received data.
 import paramiko
 import time
 
-host = '192.168.1.22'
-user = 'dave'
-passw = 'password'
-enable_pass = 'password'
-interface = []
-input_rate = []
-output_rate = []
+host = '192.168.1.22' #Remote device we want to interact with
+user = 'dave' #SSH username
+passw = 'password' #SSH password
+enable_pass = 'password' #Privileged-exec mode password
+interface = [] #List to store interface name
+input_rate = [] #List to store the input rate
+output_rate = [] #List to store the output rate
 
 #Ok, so, I'm creating a function to just take a command and send it to the device.
 #This reduces the amount of time I need to add in the "\n", sleep and clear the buffer.
