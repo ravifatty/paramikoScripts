@@ -31,3 +31,5 @@ junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist o
 junos-02.py :  Sample Paramiko script using RSA key based authentication to log into the device and run "show version|no-more"
 
 junos-03.py :  Sample Paramiko script which connects to a remote device through a bastion server, aka, 'jump' box.
+
+junos-04.py :  Similar to junos-04, but with more prompts and error handling, prompt for password instead of being hardcoded.
