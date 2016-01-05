@@ -11,6 +11,10 @@ a bit cluttered with error handling. While this is important, it was a little
 challenging to filter out the basic mechanism that was the heart of the script
 from the error handling portion. 
 
+I'm taking the approach of writing small scripts with ample comments for future reference.
+This is not intended to be a fully integrated suite of tools, but more of a dissection of 
+various functions .
+
 Hopefully this will help someone new or strugling. 
 
 All of them will assume you have Python 2.7 and Paramiko installed. 
