@@ -35,7 +35,9 @@ def issue_command(channel, command, delay=1):
     return resp
 
 #So, this takes a csv file as input and adds each line to a device list. 
-#The csv file should have the ip address, username, password and privileged-exec mode password on each line.
+#This will create a list of devices with their associated credentials and 
+#return them in a 'list of lists'. The csv file should have the ip address, 
+#username, password and privileged-exec mode password on each line.
 #Need to add some validation and error handling here. 
 def credential_list(file):
     try:
