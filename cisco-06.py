@@ -95,8 +95,8 @@ if hosts:
             ssh.connect(hosts[i][0], username=hosts[i][1], password=hosts[i][2], look_for_keys=False, allow_agent=False)
             chan = ssh.invoke_shell()
         except:
-            print "Login to %s failed." % (hosts[i],)
-            print hosts[i]
+            print "Login to %s failed." % (hosts[i][0],)
+            print hosts[i][0]
             chan = False
         #If we've been successful at logging in , we'll run our diff_parser function on the response.
         if chan:
@@ -108,6 +108,6 @@ if hosts:
             print "Showing configuration differences for host %s :" % (hosts[i][0],)
             diff_parser(resp)
         else:
-            print "Sorry, there is no connection to the host %s ." % (hosts[0],)
+            print "Sorry, there is no connection to the host %s ." % (hosts[i][0],)
 else:
     print "Invalid file."
