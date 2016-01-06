@@ -33,6 +33,8 @@ cisco-04.py :  Essentialy cisco-02.py with the error handling and "issue_command
 
 cisco-05.py :  This parses a CSV file of login credentials and issues the "show run" command on a batch of devices. 
 
+cisco-06.py :  This builds on cisco-05.py and parses the output of a "show archive config differences" per host. 
+
 #---------------------Juniper----------------
 junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
 
