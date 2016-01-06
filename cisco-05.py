@@ -17,10 +17,11 @@ e.g.
 import paramiko
 import time
 
-#I've hard coded the file, but this can easily be turned into a prompt.
+#I've hard coded the command to run and  filename, but this can easily be turned into a prompt.
 #There should also be something like an 'isfile' to verify that the file actually
 #exists.
 device_file = "cisco.txt"
+command = "show run"
 
 #Ok, so, I'm creating a function to just take a command and send it to the device.
 #This reduces the amount of time I need to add in the "\n", sleep and clear the buffer.
@@ -78,7 +79,7 @@ if hosts:
             issue_command(chan, "enable")
             issue_command(chan, hosts[i][3])
             issue_command(chan, "terminal length 0")
-            resp = issue_command(chan, "show run", 5)
+            resp = issue_command(chan, command, 5)
             ssh.close()
             print resp
         else:
