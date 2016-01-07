@@ -35,6 +35,8 @@ cisco-05.py :  This parses a CSV file of login credentials and issues the "show 
 
 cisco-06.py :  This builds on cisco-05.py and parses the output of a "show archive config differences" per host. 
 
+cisco-07.py :  This parses the saved configuration and writes it to a local file . 
+
 #---------------------Juniper----------------
 junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
 
