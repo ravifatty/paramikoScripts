@@ -75,9 +75,7 @@ def credential_list(file):
 #It will ommit the first couple lines, which basically echo the command, 
 #as well as the last line, which is simple a command prompt.
 def config_parser(data):
-    data = data.split("\r")
-    for i in range(0,len(data)):
-        data[i] = data[i].strip()
+    data = data.split("\r\n")
     return data[2:-2]
 
 #This config writer will take the config and write it to a file in the current directory. 
@@ -88,7 +86,7 @@ def config_writer(data,host):
     filename = host + "_" +  datetime.date.isoformat(datetime.datetime.now())
     with open(filename,'a') as current_config:
         for line in data:
-            current_config.write(line+"\n")
+            current_config.write(line+"\r\n")
 
 #Great, lets get the device IP, username, password, and enable password from our CSV file.
 hosts = credential_list(device_file)
