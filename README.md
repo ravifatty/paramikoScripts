@@ -1,4 +1,8 @@
 # paramikoScripts
+Moving this over from my dead and dying other githubaccount
+https://github.com/davescriptingspot
+Attempted blog with further breakdown on this works:
+https://davescriptingspot.wordpress.com/
 
 OK, 
 
