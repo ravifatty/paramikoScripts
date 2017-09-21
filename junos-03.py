@@ -8,6 +8,8 @@ One of the assumptions here is that RSA key local to the box initiating the cone
 is the same one used at the far end host.
 '''
 
+import getpass
+import os
 import paramiko
 import time
 import StringIO
@@ -20,8 +22,8 @@ import socket
 bastion_host = "192.168.1.125" # Our 'bastion' or 'jump' box
 far_end_host = "192.168.13.2" # The actual host we want to access
 user = "dave" # Username , must match on bastion and destination host
-passw = "super-secret-password" # Password for our encrypted RSA key
-rsa_key_file = "/Users/dave/.ssh/id_rsa" #Path to the specific private key we need to access the destination host
+passw = getpass.getpass("Enter password for SSH Key: ") # Password for our encrypted RSA key
+rsa_key_file = os.path.expanduser("~") + "/.ssh/git_id_rsa" #Path to the specific private key we need to access the destination host
 command = "show version|no-more" #Command to issue at the far end host
 
 

@@ -23,6 +23,7 @@ All of them will assume you have Python 2.7 and Paramiko installed.
 #Contents
 
 #---------------------Cisco-----------------
+
 cisco-01.py :  Login via ssh, enter priviliged mode, and issue a command , eg "Show vlan brief" 
 
 cisco-02.py :  Login to a switch via ssh, enter priviliged mode, and grab the current 5 min average throughput on all the interfaces
@@ -38,6 +39,7 @@ cisco-06.py :  This builds on cisco-05.py and parses the output of a "show archi
 cisco-07.py :  This parses the saved configuration and writes it to a local file . 
 
 #---------------------Juniper----------------
+
 junos-01.py :  Similar to cisco-03.py but for junos, just to give you the jist of how to at least get started there. 
 
 junos-02.py :  Sample Paramiko script using RSA key based authentication to log into the device and run "show version|no-more"
