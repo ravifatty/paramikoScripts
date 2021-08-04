@@ -51,3 +51,24 @@ junos-02.py :  Sample Paramiko script using RSA key based authentication to log 
 junos-03.py :  Sample Paramiko script which connects to a remote device through a bastion server, aka, 'jump' box.
 
 junos-04.py :  Similar to junos-04, but with more prompts and error handling, prompt for password instead of being hardcoded.
+
+
+
+
+host = "demo.wftpserver.com"
+port = 2222
+password = "demo-user"
+username = "demo-user"
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(host, port, username, password)
+
+sftp = ssh.open_sftp()
+
+path = "/upload/src.py"
+localpath = "src.py"
+sftp.put(localpath, path)
+
+sftp.close()
+ssh.close()
